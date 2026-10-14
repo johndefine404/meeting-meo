@@ -18,5 +18,8 @@ echo "파이썬 환경 만드는 중"
 python3 -m venv .venv
 .venv/bin/pip install -q -r server/requirements.txt
 
-echo "설치 끝. ./meeting-meo 로 실행하십시오."
+echo "미팅냥 앱 만드는 중"
+./tools/make_app.sh
+
+echo "설치 끝. 응용 프로그램 폴더의 미팅냥을 누르거나 ./meeting-meo 로 실행하십시오."
 echo "처음 실행 때 받아쓰기 모델(약 570MB)을 받고, 화면 기록·마이크 권한을 물어봅니다."
