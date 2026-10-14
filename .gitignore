@@ -1,0 +1,12 @@
+.venv/
+mac/tap/meet-tap
+mac/pdf/meet-pdf
+__pycache__/
+.DS_Store
+# AI 도구 설정 (저장소 배제)
+.claude/
+CLAUDE.md
+AGENTS.md
+.cursor/
+.mcp.json
+demo/dist/

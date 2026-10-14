@@ -1,0 +1,5 @@
+#!/bin/bash
+# [Define404] 미팅냥 실행
+cd "$(dirname "$0")"
+[ -x .venv/bin/python ] || { echo "먼저 ./install.sh 를 실행하십시오."; exit 1; }
+exec .venv/bin/python server/meeting_meo.py "$@"
