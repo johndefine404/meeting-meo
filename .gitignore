@@ -10,3 +10,4 @@ AGENTS.md
 .cursor/
 .mcp.json
 demo/dist/
+.wrangler/
