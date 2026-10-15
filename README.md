@@ -8,6 +8,8 @@
 
 **설치 없이 눌러 보기**: https://meeting.define404.com (예시 미팅을 재생하는 데모예요)
 
+**새 소식 (2026-10-14)**: 독에서 한 번 누르면 켜지는 미팅냥 앱이 생겼어요. [업데이트 내역](#업데이트-내역)
+
 - 면접, 영업·제안, 회의에 맞춰 다음 한마디를 다르게 드려요
 - 여러 명이 말해도 목소리로 사람을 나누고, 다른 언어로 말하면 줄마다 한국어로 옮겨요
 - 받아쓰기는 맥 안에서만 돌아요. 소리는 밖으로 나가지 않아요
@@ -145,6 +147,27 @@ MEETING_MEO_FEED=시험.wav ./meeting-meo
 - [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) (Apache 2.0)와 [3D-Speaker CAM++](https://github.com/modelscope/3D-Speaker) (Apache 2.0): 화자 구분
 - [lottie-web](https://github.com/airbnb/lottie-web) (MIT): 로고 애니메이션
 - [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (MIT): 폰 연결 QR
+
+## 업데이트 내역
+
+### 2026-10-14 (2)
+
+- **원클릭 실행**: 설치하면 `~/Applications`에 미팅냥 앱이 생겨요. 독에 두고 누르면 꺼져 있을 땐 켜고, 켜져 있을 땐 화면만 열어요.
+- **잡음 거르기**: 기침, 음악처럼 말이 아닌 소리가 `*cough*`, `[음악]` 같은 줄로 찍히던 것을 걸러요.
+- **로고**: 앱 아이콘과 화면 로고를 미팅냥 고양이로 정리했어요.
+- 이미 설치했다면 `git pull` 뒤 `./tools/make_app.sh`만 실행하면 앱이 생겨요.
+
+### 2026-10-14 첫 공개
+
+- 맥 안 받아쓰기(whisper.cpp), 상대 목소리와 내 목소리를 따로 받기
+- 미팅 종류별(면접, 영업·제안, 회의) 다음 한마디와 요지
+- 여러 명이 말해도 목소리로 사람 나누기, 이름 바꾸기와 합치기
+- 다른 언어로 말하면 줄마다 한국어 번역
+- 전문용어 괄호 주석, 목표 자동 체크, 지켜야 할 선 경고
+- 준비 자료 만들기와 A4 PDF 저장, 미팅 후 정리와 후속 메일 초안
+- 폰 프롬프터 보기, 맥과 폰의 핀 동기화, 줌 창 비추기
+- 요약 AI 선택: Claude, ChatGPT, Gemini
+- 설치 없이 보는 데모: https://meeting.define404.com
 
 ## 라이선스
 
