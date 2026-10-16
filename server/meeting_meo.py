@@ -49,6 +49,7 @@ PROVIDERS = {
     "gemini": {"name": "Gemini", "live": "gemini-3.8-flash", "deep": "gemini-3.8-flash", "keys": "https://aistudio.google.com/apikey"},
 }
 
+LIVE_GAP = 15.0  # 실시간 요약 최소 간격(초). 상대가 질문하면 기다리지 않는다
 RATE = 16000
 FRAME = 480
 BASE_HINT = "B2B, B2C, SaaS, ARR, MRR, CAC, LTV, PMF, KPI, OKR, API, MCP, RAG, LLM, SDK, UI, UX, MVP, ROI, GMV, NDA, MOU, SLA, PoC"
@@ -524,11 +525,13 @@ class Analyst:
         while True:
             self.flag.wait()
             self.flag.clear()
-            if not self.urgent:
-                gap = 5.0 - (time.time() - self.last)
-                if gap > 0:
-                    self.flag.wait(gap)
-                    self.flag.clear()
+            # 질문이 아니면 LIVE_GAP 초를 다 채운 뒤 돈다. 중간에 새 말이 들어와도 기다림을 끊지 않는다
+            while not self.urgent:
+                gap = LIVE_GAP - (time.time() - self.last)
+                if gap <= 0:
+                    break
+                self.flag.wait(gap)
+                self.flag.clear()
             self.urgent = False
             self.last = time.time()
             if not hub.meeting:
