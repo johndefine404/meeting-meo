@@ -204,11 +204,11 @@
   document.addEventListener("DOMContentLoaded", () => {
     const bar = document.createElement("div");
     bar.className = "demobar";
-    bar.innerHTML = '데모 화면이에요. 실제 받아쓰기 대신 예시 미팅을 재생해요. 미팅 종류를 고르고 "준비 자료 만들기", "미팅 시작"을 차례로 눌러 보세요. <a href="https://github.com/johndefine404/meeting-meo" target="_blank" rel="noopener">맥에 설치하기</a>';
+    bar.innerHTML = '데모 화면이에요. 실제 받아쓰기 대신 예시 미팅을 재생해요. 미팅 종류를 고르고 "준비 자료 만들기", "미팅 시작"을 차례로 눌러 보세요. <a href="https://github.com/johndefine404/meeting-meo" target="_blank" rel="noopener">맥에 설치하기</a> <span class="demoby">· 만든 곳 <a href="https://define404.com" target="_blank" rel="noopener">Define404</a></span>';
     const brand = document.querySelector("#prep .brand");
     brand.insertAdjacentElement("afterend", bar);
     const st = document.createElement("style");
-    st.textContent = ".demobar{background:#2a2410;color:#ffe7a3;border:1px solid #6b5a1e;border-radius:12px;padding:10px 14px;font-size:13.5px;line-height:1.55;margin:0 0 12px;word-break:keep-all}.demobar a{color:#ffc61a;margin-left:4px}";
+    st.textContent = ".demobar{background:#2a2410;color:#ffe7a3;border:1px solid #6b5a1e;border-radius:12px;padding:10px 14px;font-size:13.5px;line-height:1.55;margin:0 0 12px;word-break:keep-all}.demobar a{color:#ffc61a;margin-left:4px}.demobar .demoby{white-space:nowrap}";
     document.head.appendChild(st);
   });
 })();
