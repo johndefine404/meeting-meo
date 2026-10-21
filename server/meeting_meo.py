@@ -353,8 +353,7 @@ class Whisper:
             self.proc.terminate()
             self.proc = None
 
-    @staticmethod
-    def transcribe(pcm, hint):
+    def transcribe(self, pcm, hint):
         out = io.BytesIO()
         w = wave.open(out, "wb")
         w.setnchannels(1)
@@ -364,10 +363,11 @@ class Whisper:
         w.close()
         boundary = uuid.uuid4().hex
         parts = [f'--{boundary}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n{v}\r\n'.encode()
-                 for k, v in (("response_format", "json"), ("temperature", "0"), ("prompt", hint))]
+                 for k, v in (("response_format", "json"), ("temperature", "0"), ("prompt", hint), ("language", self.lang or "auto"))]
         parts.append(f'--{boundary}\r\nContent-Disposition: form-data; name="file"; filename="a.wav"\r\n'
                      f"Content-Type: audio/wav\r\n\r\n".encode() + out.getvalue() + b"\r\n")
         parts.append(f"--{boundary}--\r\n".encode())
+        # 이미 떠 있던 받아쓰기 서버가 다른 언어로 켜져 있어도 요청마다 언어를 고정한다
         req = urllib.request.Request(
             f"http://127.0.0.1:{WHISPER_PORT}/inference", data=b"".join(parts),
             headers={"Content-Type": f"multipart/form-data; boundary={boundary}"})
@@ -722,6 +722,28 @@ threading.Thread(target=translator, daemon=True).start()
 
 # ---------- 소리 받기 ----------
 
+class CallWatch:
+    """화상 통화가 실제로 열려 있는지 2초마다 본다: 크롬의 구글 미트 회의 탭, 또는 줌·팀즈·웹엑스 앱."""
+
+    TABS = 'if application "Google Chrome" is running then tell application "Google Chrome" to get URL of tabs of windows'
+    MEET = re.compile(r"meet\.google\.com/(?:[\w-]+/)*[a-z]{3,4}-[a-z]{4}-[a-z]{3,4}")
+    APPS = ("CptHost", "MSTeams", "Microsoft Teams", "Webex")  # CptHost = 줌 회의 중에만 뜨는 프로세스
+
+    def __init__(self):
+        self.in_call = False
+        threading.Thread(target=self._loop, daemon=True).start()
+
+    def _loop(self):
+        while True:
+            try:
+                tabs = subprocess.run(["osascript", "-e", self.TABS], capture_output=True, text=True, timeout=5).stdout
+                apps = subprocess.run(["pgrep", "-lx", "|".join(self.APPS)], capture_output=True, text=True, timeout=5).stdout
+                self.in_call = bool(self.MEET.search(tabs)) or any(a in apps for a in self.APPS)
+            except (subprocess.TimeoutExpired, OSError):
+                pass
+            time.sleep(2)
+
+
 class Capture:
     def __init__(self):
         self.proc = None
@@ -743,6 +765,10 @@ class Capture:
             return
         if not TAP.exists():
             raise RuntimeError("소리 받기 프로그램이 없습니다. ./install.sh 를 먼저 실행하십시오.")
+        self.live = os.environ.get("MEETING_MEO_WAIT_CALL") == "0"
+        self.loud_s = 0.0
+        if not self.live:
+            set_status("waiting")
         self.proc = subprocess.Popen([str(TAP)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         threading.Thread(target=self._read, args=(self.proc,), daemon=True).start()
         threading.Thread(target=lambda p=self.proc: [log("소리 받기:", l.decode().strip()) for l in p.stderr], daemon=True).start()
@@ -777,7 +803,34 @@ class Capture:
                 return
             n = struct.unpack("<I", head[1:])[0]
             data = out.read(n)
+            if not self._gate(head[0], data):
+                continue
             (self.them if head[0] == 0 else self.me).feed(data)
+
+    def _gate(self, src, data):
+        """통화가 시작되기 전 소리(개인 통화, 영상 등)는 받아쓰지 않는다."""
+        if os.environ.get("MEETING_MEO_WAIT_CALL") == "0":
+            return True
+        if not call_watch.in_call:
+            if self.live:
+                self.live = False
+                set_status("waiting")
+                log("받아쓰기 멈춤: 화상 통화가 닫혔습니다")
+            self.loud_s = 0.0
+            return False
+        if self.live:
+            return True
+        # 대기실에서는 상대 소리가 오지 않는다. 상대 소리가 0.5초 넘게 들려야 통화가 시작된 것으로 본다
+        if src == 0:
+            a = array.array("h", data[: len(data) // 2 * 2])
+            if a and math.sqrt(sum(x * x for x in a) / len(a)) > 800:
+                self.loud_s += len(a) / RATE
+        if self.loud_s < 0.5:
+            return False
+        self.live = True
+        set_status("idle")
+        log("받아쓰기 시작: 통화 상대 소리 감지")
+        return True
 
     def _segment(self, who, pcm, s, e):
         if who == "them":
@@ -834,6 +887,7 @@ class Capture:
                 analyst.poke(urgent=is_question(text))
 
 
+call_watch = CallWatch()
 capture = Capture()
 
 
@@ -848,6 +902,8 @@ PREP_SYSTEM = """너는 미팅 준비를 돕는다. 사용자가 준 '내 정보
 - talk: 이번 미팅에서 꺼내면 좋을 이야기 최대 6개. 상대가 원하는 것과 내 강점이 만나는 지점.
 - watch: 조심하거나 꼭 확인할 것 최대 5개(상대 조건과 내 상황이 어긋나는 곳, 지켜야 할 선 등). 없으면 빈 배열.
 - goals는 사용자가 적은 목표·물어볼 것을 한 줄씩 다듬어 그대로 옮긴다. 새로 만들지 않는다. 사용자가 비웠으면 미팅 종류에 맞는 기본 목표 3개를 제안한다.
+- pins: 미팅 중 바로 꺼내 읽을 정해 둔 답 최대 8개(희망 조건, 시작일, 소개 한 줄, 물어볼 것 등). 받은 자료에 있는 것만. 없으면 빈 배열.
+- terms: 상대 쪽에서 나올 고유명사·업계 용어 최대 10개. '용어: 뜻' 꼴로 뜻은 25자 이내. 없으면 빈 배열.
 - stt_hint는 받아쓰기가 틀리기 쉬운 고유명사·제품명·약어를 쉼표로 20개 이내.
 - title은 '상대 이름 · 미팅 종류' 형태로 짧게.
 - 한국어로 쓴다. 긴 줄표(엠대시) 문장부호를 쓰지 않는다."""
@@ -863,9 +919,11 @@ PREP_SCHEMA = {
         "talk": {"type": "array", "items": {"type": "string"}},
         "watch": {"type": "array", "items": {"type": "string"}},
         "goals": {"type": "array", "items": {"type": "string"}},
+        "pins": {"type": "array", "items": {"type": "string"}},
+        "terms": {"type": "array", "items": {"type": "string"}},
         "stt_hint": {"type": "string"},
     },
-    "required": ["title", "counterpart", "me", "talk", "watch", "goals", "stt_hint"],
+    "required": ["title", "counterpart", "me", "talk", "watch", "goals", "pins", "terms", "stt_hint"],
     "additionalProperties": False,
 }
 
@@ -1015,6 +1073,15 @@ def wrap_up(m):
 state_lock = threading.Lock()
 
 
+def seed_prep(prep):
+    """준비 자료의 핀·용어를 시작 화면에 미리 깔아 둔다."""
+    hub.pins = [{"text": x.strip(), "t": "준비"} for x in prep.get("pins", []) if x.strip()]
+    for item in prep.get("terms", []):
+        term, _, meaning = item.partition(":")
+        if term.strip():
+            hub.terms.append({"term": term.strip(), "heard": term.strip(), "short": meaning.strip()[:10], "meaning": meaning.strip()})
+
+
 def start_meeting(body):
     with state_lock:
         if hub.meeting:
@@ -1035,6 +1102,7 @@ def start_meeting(body):
         hub.reset()
         diarizer.reset()
         hub.meeting = m
+        seed_prep(m.get("prep") or {})
         capture.start(m["stt_hint"])
         hub.send(hub.snapshot())
         return {"id": mid}

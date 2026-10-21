@@ -131,6 +131,7 @@
   .state span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--bad); flex: none; }
   .dot.on { background: var(--ok); }
+  .dot.wait { background: var(--dim); }
   .dot.them { background: var(--q); animation: pulse 1s ease-in-out infinite; }
   .dot.thinking, .dot.wrapping { background: var(--busy); animation: pulse .6s ease-in-out infinite; }
   @keyframes pulse { 50% { opacity: .35; transform: scale(.8); } }
@@ -545,6 +546,8 @@ $("profileSave").addEventListener("click", async () => {
 
 // ---- 준비 자료 문서: 줄을 눌러 고치고, x로 지우고, +로 더한다 ----
 const today = () => { const d = new Date(); return `${d.getFullYear()}. ${d.getMonth() + 1}. ${d.getDate()}.`; };
+// 핀·용어 칸이 없던 예전 준비 자료도 열리게 한다
+function withNewFields(p) { p.pins = p.pins || []; p.terms = p.terms || []; return p; }
 function docSections() {
   return [
     { key: "counterpart", title: "상대", lead: prep.counterpart.who, items: prep.counterpart.points },
@@ -552,6 +555,8 @@ function docSections() {
     { key: "talk", title: "이번 미팅에서 꺼낼 이야기", items: prep.talk },
     { key: "watch", title: "조심하거나 꼭 확인할 것", items: prep.watch },
     { key: "goals", title: "목표", items: prep.goals, note: "미팅 중 다뤄지면 자동으로 체크돼요" },
+    { key: "pins", title: "미리 띄워 둘 답", items: prep.pins, note: "미팅을 시작하면 핀으로 고정돼요" },
+    { key: "terms", title: "용어", items: prep.terms, note: "'용어: 뜻' 꼴로 적으면 받아쓴 글 옆에 뜻이 붙어요" },
   ];
 }
 function renderDoc() {
@@ -596,7 +601,7 @@ $("prepBtn").addEventListener("click", async () => {
   const timer = setInterval(() => { step = Math.min(step + 1, LOAD_STEPS.length - 1); $("loadStep").textContent = LOAD_STEPS[step]; }, 8000);
   try {
     const d = await api("/api/prepare", { mode, counterpart: $("counterpart").value, urls: $("urls").value.split("\n"), goals_text: $("goalsText").value, guardrails: $("guardrails").value });
-    prep = d; $("sttHint").value = d.stt_hint || "";
+    prep = withNewFields(d); $("sttHint").value = d.stt_hint || "";
     store.set("mm-prep", { prep, mode });
     renderDoc(); showDoc("ready");
     if (innerWidth < 900) $("docReady").scrollIntoView({ behavior: "smooth" });
@@ -661,7 +666,7 @@ $("startBtn").addEventListener("click", () => startMeeting(true));
 $("quickStart").addEventListener("click", () => startMeeting(false));
 
 const saved = store.get("mm-prep", null);
-if (saved && saved.prep) { prep = saved.prep; renderDoc(); showDoc("ready"); $("prepBtn").textContent = "준비 자료 다시 만들기"; } else showDoc("empty");
+if (saved && saved.prep) { prep = withNewFields(saved.prep); renderDoc(); showDoc("ready"); $("prepBtn").textContent = "준비 자료 다시 만들기"; } else showDoc("empty");
 
 async function loadState() {
   try {
@@ -686,7 +691,7 @@ let tab = "pins";
 let follow = true;
 let lastAlert = "";
 
-const STATE = { them: ["them", "상대가 말하는 중"], thinking: ["thinking", "정리하는 중"], wrapping: ["wrapping", "미팅 정리하는 중"], idle: ["on", "듣는 중"] };
+const STATE = { them: ["them", "상대가 말하는 중"], thinking: ["thinking", "정리하는 중"], wrapping: ["wrapping", "미팅 정리하는 중"], waiting: ["wait", "통화가 시작되면 받아써요"], idle: ["on", "듣는 중"] };
 function setState(s) { const [c, t] = STATE[s] || STATE.idle; $("dot").className = "dot " + c; $("status").textContent = t; }
 const pinKey = () => "mm-pins-" + (L.meeting ? L.meeting.id : "");
 function savePins() { store.set(pinKey(), pins); api("/api/pin", { pins }).catch(() => {}); }
@@ -824,7 +829,7 @@ function briefDoc(p) {
   const sec = (title, lead, items) => (lead || (items && items.length)) ? `<section><h3>${esc(title)}</h3>${lead ? `<p class="lead">${esc(lead)}</p>` : ""}<ul>${(items || []).filter(Boolean).map((t) => `<li><span class="tx">${esc(t)}</span></li>`).join("")}</ul></section>` : "";
   return `<div class="dbrand">미팅냥 · 미팅 준비 자료</div><div class="dtitle">${esc(p.title || "")}</div><div class="dsub">${esc(MODE_NAME[(L.meeting || {}).mode] || "")}</div>` +
     sec("상대", p.counterpart && p.counterpart.who, p.counterpart && p.counterpart.points) + sec("나", p.me && p.me.headline, p.me && p.me.points) +
-    sec("이번 미팅에서 꺼낼 이야기", "", p.talk) + sec("조심하거나 꼭 확인할 것", "", p.watch) + sec("목표", "", p.goals);
+    sec("이번 미팅에서 꺼낼 이야기", "", p.talk) + sec("조심하거나 꼭 확인할 것", "", p.watch) + sec("목표", "", p.goals) + sec("미리 띄워 둘 답", "", p.pins) + sec("용어", "", p.terms);
 }
 
 function renderAll() { renderCard(L.card); renderTermsStrip(); redrawFeed(); renderSheet(); renderAlerts(); }
