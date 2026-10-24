@@ -44,6 +44,7 @@
   .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
   .row > * { flex: 1; min-width: 140px; }
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 42px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel2); font-size: 15px; flex: none; }
+  .btn[hidden] { display: none; }
   .btn.main { background: var(--accent); color: #1a1405; border-color: var(--accent); font-weight: 700; }
   .btn.ghost { color: var(--sub); }
   .btn:disabled { opacity: .5; cursor: default; }
@@ -121,6 +122,84 @@
     .doc { padding: 30px 34px 22px; }
   }
   @media print { body { background: #fff; } }
+
+  /* ---------- 면접: 준비 키트 카드 ---------- */
+  .doc .qa { border: 1px solid #e4dfd2; border-radius: 10px; padding: 10px 12px; margin: 0 0 8px; background: #fffdf8; }
+  .doc .qa.risk { border-color: #ecc9c2; background: #fff8f6; }
+  .doc .qhead { display: flex; gap: 6px; align-items: flex-start; }
+  .doc .qhead .q { flex: 1; font-weight: 700; font-size: 14.5px; line-height: 1.45; outline: none; border-radius: 4px; }
+  .doc .tag { flex: none; font-size: 11px; font-weight: 700; color: #6a5414; background: #f3e7c2; border-radius: 6px; padding: 2px 6px; margin-top: 1px; white-space: nowrap; }
+  .doc .qa.risk .tag { color: #8a2c1d; background: #f6d9d2; }
+  .doc .cue { font-size: 13px; color: #8a6d1d; font-weight: 700; margin: 4px 0 2px; outline: none; border-radius: 4px; }
+  .doc .cue::before { content: "핵심어 "; color: #a8a29a; font-weight: 400; }
+  .doc .qans { font-size: 14px; line-height: 1.6; outline: none; border-radius: 4px; padding: 2px 0; }
+  .doc .meta { font-size: 12px; color: #8a8d92; margin-top: 4px; line-height: 1.5; }
+  .doc .meta b { color: #6b6e73; font-weight: 600; }
+  .doc .meta.gap b { color: #a0522d; }
+  .doc .meta.dont { color: #a33a2a; }
+  .doc .qbtns { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .doc .qbtns button { font-size: 12.5px; color: #6a5414; border: 1px solid #e0d6bb; border-radius: 999px; padding: 3px 10px; }
+  .doc .qbtns button:hover { background: #f3ecd8; }
+  .doc .qbtns .x2 { color: #a0a3a8; border-color: #e4e4e4; }
+  .ivdiv { margin: 18px 0 12px; padding-top: 12px; border-top: 2px solid #1b1c1e; font-size: 11px; letter-spacing: .08em; color: #8a6d1d; font-weight: 700; }
+  .memrow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .memrow .btn { flex: 1; min-width: 130px; }
+  .memstat { color: var(--sub); font-size: 13.5px; }
+
+  /* ---------- 면접 연습 화면 ---------- */
+  .qbig { font-size: 21px; line-height: 1.45; font-weight: 700; margin: 6px 0 4px; }
+  .qtag { display: inline-block; font-size: 12px; color: #1a1405; background: var(--q); border-radius: 6px; padding: 1px 7px; font-weight: 700; }
+  .qtag.risk { background: #ff9f7a; }
+  .recrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 10px 0 8px; }
+  .recrow .btn { flex: none; }
+  .rec.on { background: var(--bad); border-color: var(--bad); color: #fff; }
+  .timer { color: var(--sub); font-variant-numeric: tabular-nums; font-size: 14px; }
+  .timer.long { color: var(--busy); }
+  .total { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+  .total b { font-size: 40px; color: var(--q); line-height: 1; }
+  .total span { color: var(--sub); font-size: 14px; }
+  .bars { display: grid; gap: 8px; margin-bottom: 6px; }
+  .barrow { display: grid; grid-template-columns: 128px 1fr 28px; gap: 8px; align-items: center; font-size: 13.5px; }
+  .barrow .track { height: 8px; background: var(--panel2); border-radius: 4px; overflow: hidden; }
+  .barrow .track i { display: block; height: 100%; background: var(--ok); border-radius: 4px; }
+  .barrow .track i.low { background: var(--busy); }
+  .barrow small { grid-column: 1 / -1; color: var(--dim); font-size: 12.5px; margin-top: -4px; line-height: 1.45; }
+  .better { background: var(--ans-bg); border: 1px solid var(--ans-line); border-radius: 12px; padding: 12px; color: var(--ans); font-size: 15.5px; line-height: 1.6; margin: 6px 0 8px; white-space: pre-wrap; }
+  .cueline { color: var(--q); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+  .bankitem { border-bottom: 1px solid var(--line); padding: 12px 0; }
+  .bankitem .bq { font-weight: 700; font-size: 15px; line-height: 1.45; margin: 4px 0; }
+  .bankitem .ba { font-size: 14px; line-height: 1.6; color: var(--text); outline: none; border-radius: 6px; padding: 2px 4px; margin: 0 -4px; }
+  .bankitem .bc { font-size: 13px; color: var(--q); outline: none; border-radius: 6px; padding: 2px 4px; margin: 0 -4px; }
+  .bankitem [contenteditable]:focus, .bankitem [contenteditable]:hover { background: var(--panel2); }
+  .bankitem small { color: var(--dim); font-size: 12px; display: block; margin-top: 4px; }
+  .bankitem .row .btn { min-height: 34px; font-size: 13px; }
+  .lessonitem { display: flex; gap: 8px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; line-height: 1.5; }
+  .lessonitem span { flex: 1; }
+  .lessonitem small { color: var(--dim); display: block; font-size: 12px; }
+  .lessonitem button { color: var(--dim); font-size: 13px; flex: none; }
+  .histitem { display: flex; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+  .histitem span { flex: 1; min-width: 0; }
+  .histitem select { width: auto; flex: none; padding: 6px 8px; font-size: 13px; }
+  .qsel { margin-bottom: 4px; }
+  /* 미팅 중 답변 카드 */
+  #cue { display: none; font-size: 22px; line-height: 1.35; font-weight: 800; color: var(--q); margin-bottom: 6px; }
+  #cue.on { display: block; }
+  #cardTag { display: none; flex: none; font-size: 11px; color: #1a1405; background: var(--ans); border-radius: 6px; padding: 1px 6px; font-weight: 700; white-space: nowrap; }
+  #cardTag.on { display: inline-block; }
+  #dontLine { display: none; color: #ffb4b4; font-size: 13.5px; margin-top: 8px; line-height: 1.45; }
+  #dontLine.on { display: block; }
+  body.prompter #cue { font-size: clamp(30px, 8vw, 54px); }
+  body.hascue #hints { display: none; }
+  body.prompter.hascue #reply { font-size: clamp(18px, 4.5vw, 26px); }
+  @media (min-width: 900px) { #cue { font-size: 28px; } }
+  .verdict { flex: none; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 1px 6px; color: #1a1405; background: var(--ok); }
+  .verdict.보통 { background: var(--q); } .verdict.아쉬움 { background: #ff9f7a; }
+  .review { border-bottom: 1px solid var(--line); padding: 10px 0; }
+  .review .rq { display: flex; gap: 8px; align-items: baseline; font-weight: 700; font-size: 15px; line-height: 1.45; }
+  .review .mine { color: var(--sub); font-size: 13.5px; margin: 4px 0; line-height: 1.5; }
+  .review .better { font-size: 14.5px; margin: 6px 0 4px; }
+  .review label { display: flex; gap: 6px; align-items: center; color: var(--sub); font-size: 13px; cursor: pointer; }
+  .review label input { width: 16px; height: 16px; accent-color: var(--accent); }
 
   /* ---------- 미팅 화면 (한 화면 고정) ---------- */
   #live { height: 100dvh; overflow: hidden; }
@@ -303,6 +382,13 @@
         </div>
       </div>
 
+      <div class="step" id="memStep" hidden>
+        <h2>면접 기록장 <em id="memBadge"></em></h2>
+        <p class="help">면접을 볼수록 다듬은 답과 배운 점이 여기에 쌓여요. 다음 준비 자료가 이걸 바탕으로 만들어져요.</p>
+        <div class="memstat" id="memStat"></div>
+        <div class="memrow"><button class="btn main" id="coachBtn" type="button">연습하기</button><button class="btn" id="bankBtn" type="button">기록장 열기</button></div>
+      </div>
+
       <div class="step">
         <h2>3. 상대</h2>
         <p class="help">누구와 무슨 이야기를 하는지 적으세요. 홈페이지나 공고 주소를 넣으면 읽어서 정리해요.</p>
@@ -362,9 +448,45 @@
       </div>
       <div class="actbar" id="actbar" hidden>
         <label class="stagepick" id="stagePick" hidden><input type="checkbox" id="stageWith"> 회의 화면도 미팅냥 안에 비추기 (줌 앱용) <small>구글 미트는 켜지 않아도 돼요. 미팅냥으로 돌아오면 마이크·카메라 버튼이 있는 작은 창이 자동으로 떠요.</small></label>
+        <button class="btn" id="saveAll" type="button" hidden>답 전부 기록장에 저장</button>
         <button class="btn" id="prepPdf" type="button">PDF로 저장</button>
         <button class="btn main" id="startBtn" type="button">미팅 시작</button>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 면접 연습 · 기록장 ================= -->
+<section class="view" id="coach">
+  <div class="page">
+    <div class="brand"><h1>면접 연습</h1><div class="gap"></div><button class="btn ghost" id="coachBack" type="button">준비 화면으로</button></div>
+    <div class="seg" id="cseg">
+      <button type="button" data-ctab="practice" class="on">연습</button>
+      <button type="button" data-ctab="bank">답변 은행<i id="nBank"></i></button>
+      <button type="button" data-ctab="memory">배운 점과 지난 면접</button>
+    </div>
+    <div id="cPractice">
+      <div class="step">
+        <select id="qPick" class="qsel" aria-label="연습할 질문"></select>
+        <div id="qEmpty" class="help" hidden>연습할 질문이 아직 없어요. 준비 화면에서 면접 준비 자료를 만들거나, 아래에 질문을 직접 적어 보세요.</div>
+        <div><span class="qtag" id="qTag"></span></div>
+        <div class="qbig" id="qText" contenteditable="true" aria-label="질문"></div>
+        <p class="help">준비한 답을 보지 말고 소리 내어 말해 보세요. 실제 면접처럼 1~2분 안에요. 모범 답은 채점 뒤에 보여 드려요.</p>
+        <div class="recrow">
+          <button class="btn rec" id="recBtn" type="button" hidden>말로 답하기</button>
+          <span class="timer" id="recTimer"></span>
+          <span class="help" id="recNote" style="margin:0"></span>
+        </div>
+        <textarea id="ansText" rows="6" placeholder="말로 답하면 받아쓴 글이 여기에 들어와요. 글로 적어도 돼요."></textarea>
+        <div class="row"><button class="btn main" id="scoreBtn" type="button">채점받기</button><button class="btn" id="nextQ" type="button">다음 질문</button></div>
+        <div class="err" id="coachErr"></div>
+      </div>
+      <div class="step" id="scoreBox" hidden></div>
+    </div>
+    <div id="cBank" hidden><div class="step" id="bankList"></div></div>
+    <div id="cMemory" hidden>
+      <div class="step"><h2>배운 점</h2><p class="help">면접을 정리할 때 "다음 면접에 가져가기"를 누르면 쌓여요. 다음 준비 자료에 반영돼요.</p><div id="lessonList"></div></div>
+      <div class="step"><h2>지난 면접</h2><p class="help">결과가 나오면 골라 두세요. 어떤 준비가 통했는지 나중에 돌아볼 수 있어요.</p><div id="histList"></div></div>
     </div>
   </div>
 </section>
@@ -393,8 +515,10 @@
         <div id="gist" data-pin class="blank">상대가 말하면 요지가 뜹니다</div>
       </section>
       <section class="card ans" id="rCard">
-        <div class="label"><span id="replyLabel" style="flex:none">추천 답</span><span class="intent">누르면 핀 고정</span></div>
+        <div class="label"><span id="cardTag"></span><span id="replyLabel" style="flex:none">추천 답</span><span class="intent">누르면 핀 고정</span></div>
+        <div id="cue" data-pin></div>
         <div id="reply" data-pin class="blank">나에게 질문이 오면 한 문장이 뜹니다</div>
+        <div id="dontLine"></div>
         <div id="hints"></div>
       </section>
     </div>
@@ -462,7 +586,7 @@ async function api(path, body) {
 let toastTimer;
 function toast(msg) { $("toast").textContent = msg; $("toast").classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => $("toast").classList.remove("show"), 1500); }
 function show(id) {
-  ["prep", "live", "after"].forEach((v) => $(v).classList.toggle("on", v === id));
+  ["prep", "live", "after", "coach"].forEach((v) => $(v).classList.toggle("on", v === id));
   document.body.style.overflow = id === "live" ? "hidden" : "";
   document.body.classList.toggle("prompter", id === "live" && store.get("mm-view", "full") === "prompter");
 }
@@ -487,6 +611,7 @@ const MODE_NAME = { interview: "면접", sales: "영업·제안", meeting: "회�
 function setMode(m) {
   mode = m; store.set("mm-mode", m);
   [...$("modes").children].forEach((b) => b.classList.toggle("on", b.dataset.mode === m));
+  $("memStep").hidden = m !== "interview" || !!window.MM_DEMO;
   if (prep) renderDoc();
 }
 $("modes").addEventListener("click", (e) => { const b = e.target.closest("[data-mode]"); if (b) setMode(b.dataset.mode); });
@@ -567,17 +692,58 @@ function renderDoc() {
     docSections().map((s) => `<section><h3>${esc(s.title)}${s.note ? `<small>${esc(s.note)}</small>` : ""}</h3>` +
       (s.lead !== undefined ? `<p class="lead" contenteditable="true" data-lead="${s.key}">${esc(s.lead)}</p>` : "") +
       `<ul>${(s.items || []).map((t, i) => li(s.key, t, i)).join("")}</ul><button class="add" type="button" data-add="${s.key}">+ 줄 추가</button></section>`).join("") +
+    ivDoc() +
     `<div class="hint">줄을 눌러 고칠 수 있어요. 고친 내용이 미팅 중 참고 자료가 돼요.</div>`;
+  $("saveAll").hidden = !ivOn();
 }
-function listOf(key) { return key === "counterpart" ? prep.counterpart.points : key === "me" ? prep.me.points : prep[key]; }
+const ivOn = () => mode === "interview" && prep && prep.interview;
+// 면접 준비 키트: 예상 질문과 답, 곤란한 질문, 내가 물어볼 것, 말하지 않을 것
+function qaCard(kind, a, i) {
+  const risk = kind === "risks";
+  return `<div class="qa${risk ? " risk" : ""}" data-qa="${kind}" data-i="${i}">
+    <div class="qhead"><span class="tag">${esc(a.qtype || "기타")}</span><span class="q" contenteditable="true" data-f="question">${esc(a.question)}</span></div>
+    <div class="cue" contenteditable="true" data-f="cue">${esc(a.cue)}</div>
+    <div class="qans" contenteditable="true" data-f="answer">${esc(a.answer)}</div>
+    ${risk && a.dont ? `<div class="meta dont"><b>피할 말</b> ${esc(a.dont)}</div>` : ""}
+    ${a.gaps ? `<div class="meta gap"><b>채울 곳</b> ${esc(a.gaps)}</div>` : ""}
+    ${(a.facts || []).length ? `<div class="meta"><b>근거</b> ${a.facts.map(esc).join(" / ")}</div>` : ""}
+    <div class="qbtns"><button type="button" data-practice="${kind}:${i}">연습</button><button type="button" data-save="${kind}:${i}">답변 은행에 저장</button><button type="button" class="x2" data-qdel="${kind}:${i}">지우기</button></div>
+  </div>`;
+}
+function ivDoc() {
+  if (!ivOn()) return "";
+  const iv = prep.interview;
+  const li = (key, t, i) => `<li><span class="tx" contenteditable="true" data-k="${key}" data-i="${i}">${esc(t)}</span><button class="x" type="button" data-del="${key}" data-i="${i}" aria-label="지우기">×</button></li>`;
+  const list = (key, title, items, note) => `<section><h3>${esc(title)}${note ? `<small>${esc(note)}</small>` : ""}</h3><ul>${(items || []).map((t, i) => li(key, t, i)).join("")}</ul><button class="add" type="button" data-add="${key}">+ 줄 추가</button></section>`;
+  return `<div class="ivdiv">면접 준비 키트</div>
+    <section><h3>계속 돌아올 한 줄</h3><p class="lead" contenteditable="true" data-lead="iv.message">${esc(iv.message)}</p></section>` +
+    list("iv.criteria", "면접관이 볼 기준", iv.criteria) +
+    `<section><h3>예상 질문과 답<small>답은 이력서 사실로만, 빈 곳은 ○○</small></h3>${(iv.answers || []).map((a, i) => qaCard("answers", a, i)).join("")}</section>` +
+    `<section><h3>곤란한 질문 방어</h3>${(iv.risks || []).map((a, i) => qaCard("risks", a, i)).join("")}</section>` +
+    list("iv.ask", "내가 물어볼 질문", iv.ask, "우선순위 순") + list("iv.dont", "말하지 않을 것", iv.dont) +
+    ((iv.timeplan || []).length ? list("iv.timeplan", "시간 배분", iv.timeplan) : "");
+}
+function listOf(key) {
+  if (key.startsWith("iv.")) return prep.interview[key.slice(3)];
+  return key === "counterpart" ? prep.counterpart.points : key === "me" ? prep.me.points : prep[key];
+}
 $("doc").addEventListener("input", (e) => {
   const t = e.target;
   if (t.id === "dtitle") prep.title = t.textContent.trim();
+  else if (t.dataset.f) { const box = t.closest("[data-qa]"); prep.interview[box.dataset.qa][+box.dataset.i][t.dataset.f] = t.textContent.trim(); }
+  else if (t.dataset.lead === "iv.message") prep.interview.message = t.textContent.trim();
   else if (t.dataset.lead) { if (t.dataset.lead === "counterpart") prep.counterpart.who = t.textContent.trim(); else prep.me.headline = t.textContent.trim(); }
   else if (t.dataset.k) listOf(t.dataset.k)[+t.dataset.i] = t.textContent.trim();
   store.set("mm-prep", { prep, mode });
 });
 $("doc").addEventListener("click", (e) => {
+  const qref = (el, attr) => { const [k, i] = el.getAttribute(attr).split(":"); return [k, +i]; };
+  const qd = e.target.closest("[data-qdel]");
+  if (qd) { const [k, i] = qref(qd, "data-qdel"); prep.interview[k].splice(i, 1); renderDoc(); store.set("mm-prep", { prep, mode }); return; }
+  const sv = e.target.closest("[data-save]");
+  if (sv) { const [k, i] = qref(sv, "data-save"); saveToBank([prep.interview[k][i]], "준비"); return; }
+  const pr = e.target.closest("[data-practice]");
+  if (pr) { const [k, i] = qref(pr, "data-practice"); openCoach("practice", prep.interview[k][i].question); return; }
   const del = e.target.closest("[data-del]");
   if (del) { listOf(del.dataset.del).splice(+del.dataset.i, 1); renderDoc(); store.set("mm-prep", { prep, mode }); return; }
   const add = e.target.closest("[data-add]");
@@ -622,11 +788,25 @@ $("prepPdf").addEventListener("click", async () => {
   busy($("prepPdf"), true, "PDF 만드는 중");
   try {
     await savePdf(prep.title, `${MODE_NAME[mode]} · ${today()} · 미팅 준비 자료`,
-      docSections().map((s) => ({ title: s.title, lead: s.lead, items: s.items })), `미팅 준비 - ${safeName(prep.title)}.pdf`);
+      [...docSections().map((s) => ({ title: s.title, lead: s.lead, items: s.items })), ...ivPdfSections()], `미팅 준비 - ${safeName(prep.title)}.pdf`);
     toast("PDF를 저장했어요");
   } catch (e) { toast(e.message); }
   busy($("prepPdf"), false, "PDF로 저장");
 });
+
+function ivPdfSections() {
+  if (!ivOn()) return [];
+  const iv = prep.interview;
+  const qa = (a) => `[${a.qtype}] ${a.question}\n핵심어: ${a.cue}\n${a.answer}` + (a.dont ? `\n피할 말: ${a.dont}` : "") + (a.gaps ? `\n채울 곳: ${a.gaps}` : "");
+  return [
+    { title: "계속 돌아올 한 줄", lead: iv.message, items: [] },
+    { title: "면접관이 볼 기준", items: iv.criteria },
+    { title: "예상 질문과 답", pre: (iv.answers || []).map(qa).join("\n\n") },
+    { title: "곤란한 질문 방어", pre: (iv.risks || []).map(qa).join("\n\n") },
+    { title: "내가 물어볼 질문", items: iv.ask }, { title: "말하지 않을 것", items: iv.dont }, { title: "시간 배분", items: iv.timeplan },
+  ];
+}
+$("saveAll").addEventListener("click", () => { if (ivOn()) saveToBank([...(prep.interview.answers || []), ...(prep.interview.risks || [])], "준비"); });
 
 // 회의 탭을 고른 뒤에도 화면이 미팅냥에 머물게 한다 (크롬은 기본으로 공유한 탭으로 넘어간다)
 async function captureMeeting() {
@@ -677,12 +857,227 @@ async function loadState() {
     if (s.profile.text && !$("profileText").value) $("profileText").value = s.profile.text;
     if (s.profile.text || s.profile.pdf_name) $("profileSaved").textContent = "저장됨";
     if (s.profile.pdf_name) $("pdfName").textContent = s.profile.pdf_name;
-    lanUrl = s.lan; drawQR();
+    lanUrl = s.lan; drawQR(); loadBank();
     $("histStep").hidden = !s.meetings.length;
     $("hist").innerHTML = s.meetings.map((m) => `<a href="#" data-id="${esc(m.id)}">${esc(m.title)}<small>${esc(m.id.slice(0, 4))}.${esc(m.id.slice(4, 6))}.${esc(m.id.slice(6, 8))} · ${esc(MODE_NAME[m.mode] || "")}</small></a>`).join("");
   } catch (e) { $("prepErr").textContent = e.message + (KEY ? "" : " 맥 터미널에 찍힌 주소로 다시 열어 주세요."); }
 }
 $("hist").addEventListener("click", async (e) => { const a = e.target.closest("[data-id]"); if (!a) return; e.preventDefault(); openAfter(a.dataset.id); });
+
+// ================= 면접 기록장 · 연습 =================
+let bank = { answers: [], lessons: [], history: [] };
+async function loadBank() {
+  if (window.MM_DEMO) return bank;
+  try { bank = await api("/api/bank"); } catch (e) { /* 기록장이 없어도 나머지는 그대로 쓴다 */ }
+  const n = bank.answers.length, l = bank.lessons.length, h = bank.history.length;
+  $("memStat").textContent = n || l || h ? `다듬은 답 ${n}개 · 배운 점 ${l}개 · 지난 면접 ${h}건` : "아직 비어 있어요. 준비 자료를 만들고 답을 저장하면 쌓여요.";
+  $("memBadge").textContent = n ? `답 ${n}개` : "";
+  $("nBank").textContent = n || "";
+  return bank;
+}
+const prepCompany = () => (prep && prep.title ? prep.title.split(" · ")[0].trim() : "");
+async function saveToBank(items, source) {
+  try {
+    const d = await api("/api/bank", { op: "upsert", source, company: prepCompany(), answers: items });
+    bank = d.bank; toast(`답변 은행에 ${d.saved}개 저장했어요`); loadBank();
+  } catch (e) { toast(e.message); }
+}
+async function bankOp(body) { const d = await api("/api/bank", body); bank = d.bank; loadBank(); return d; }
+
+let ctab = "practice";
+let qList = [];
+let qCur = null;
+function buildQuestions() {
+  const out = [];
+  const seen = new Set();
+  const add = (x, group) => { if (!x.question || seen.has(x.question)) return; seen.add(x.question); out.push({ ...x, group }); };
+  if (prep && prep.interview) {
+    (prep.interview.answers || []).forEach((a) => add({ qtype: a.qtype, question: a.question, ref: a.answer, cue: a.cue, risk: false }, "이번 면접"));
+    (prep.interview.risks || []).forEach((a) => add({ qtype: a.qtype, question: a.question, ref: a.answer, cue: a.cue, dont: a.dont, risk: true }, "이번 면접"));
+  }
+  bank.answers.forEach((a) => add({ qtype: a.qtype, question: a.question, ref: a.answer, cue: a.cue, dont: a.dont, risk: false, bankId: a.id }, "답변 은행"));
+  // 은행에 있는 질문은 이번 면접 질문과 겹쳐도 점수를 남길 수 있게 이어 둔다
+  out.forEach((q) => { if (!q.bankId) { const b = bank.answers.find((a) => a.question === q.question || (a.qtype === q.qtype && SINGLE_Q.has(q.qtype))); if (b) q.bankId = b.id; } });
+  return out;
+}
+const SINGLE_Q = new Set(["자기소개", "지원 동기", "이직 사유", "강점", "약점", "처우", "입사 시기", "근무 형태", "마지막 한마디"]);
+function renderQPick() {
+  qList = buildQuestions();
+  const groups = {};
+  qList.forEach((q, i) => { (groups[q.group] = groups[q.group] || []).push(`<option value="${i}">${esc(q.risk ? "[곤란] " : "")}${esc(q.question)}</option>`); });
+  $("qPick").innerHTML = Object.entries(groups).map(([g, o]) => `<optgroup label="${esc(g)}">${o.join("")}</optgroup>`).join("");
+  $("qPick").hidden = !qList.length; $("qEmpty").hidden = !!qList.length;
+}
+function setQuestion(q) {
+  qCur = q || { qtype: "기타", question: "", ref: "" };
+  $("qTag").textContent = qCur.qtype || "기타"; $("qTag").className = "qtag" + (qCur.risk ? " risk" : "");
+  $("qText").textContent = qCur.question;
+  $("ansText").value = ""; recSecs = 0; $("recTimer").textContent = ""; $("scoreBox").hidden = true; $("coachErr").textContent = "";
+  const i = qList.indexOf(q); if (i >= 0) $("qPick").value = String(i);
+}
+async function openCoach(t, question) {
+  show("coach"); window.scrollTo(0, 0);
+  await loadBank(); renderQPick();
+  setCTab(t || "practice");
+  const q = qList.find((x) => x.question === question) || qList[0];
+  setQuestion(q);
+}
+function setCTab(t) {
+  ctab = t; [...$("cseg").children].forEach((b) => b.classList.toggle("on", b.dataset.ctab === t));
+  $("cPractice").hidden = t !== "practice"; $("cBank").hidden = t !== "bank"; $("cMemory").hidden = t !== "memory";
+  if (t === "bank") renderBank(); if (t === "memory") renderMemory();
+}
+$("cseg").addEventListener("click", (e) => { const b = e.target.closest("[data-ctab]"); if (b) setCTab(b.dataset.ctab); });
+$("coachBtn").addEventListener("click", () => openCoach("practice"));
+$("bankBtn").addEventListener("click", () => openCoach("bank"));
+$("coachBack").addEventListener("click", () => { stopRec(true); show("prep"); loadBank(); if (prep) renderDoc(); });
+$("qPick").addEventListener("change", () => setQuestion(qList[+$("qPick").value]));
+$("nextQ").addEventListener("click", () => {
+  if (!qList.length) return;
+  // 아직 점수가 없거나 낮은 질문, 곤란한 질문을 먼저
+  const score = (q) => { const b = bank.answers.find((a) => a.id === q.bankId); const s = b && b.scores && b.scores.length ? b.scores[b.scores.length - 1].total : -1; return s; };
+  const i = qList.indexOf(qCur);
+  const rest = qList.filter((q) => q !== qCur);
+  rest.sort((a, b) => (score(a) - score(b)) || ((b.risk ? 1 : 0) - (a.risk ? 1 : 0)) || (qList.indexOf(a) - qList.indexOf(b)));
+  setQuestion(rest[0] || qList[(i + 1) % qList.length]);
+});
+$("qText").addEventListener("input", () => { if (qCur) qCur.question = $("qText").textContent.trim(); });
+$("qText").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); e.target.blur(); } });
+
+// ---- 말로 답하기: 맥 마이크 소리를 16kHz로 줄여 서버의 받아쓰기로 보낸다 (소리는 남기지 않음) ----
+let rec = null, recSecs = 0, recStart = 0, recTick = null;
+if (!window.MM_DEMO && window.isSecureContext && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) $("recBtn").hidden = false;
+else $("recNote").textContent = "말로 답하기는 맥 화면에서 쓸 수 있어요. 여기서는 글로 적어 주세요.";
+async function startRec() {
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } });
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const src = ctx.createMediaStreamSource(stream);
+  const node = ctx.createScriptProcessor(4096, 1, 1);
+  const chunks = [];
+  node.onaudioprocess = (ev) => chunks.push(new Float32Array(ev.inputBuffer.getChannelData(0)));
+  src.connect(node); node.connect(ctx.destination);
+  rec = { stream, ctx, node, src, chunks, rate: ctx.sampleRate };
+  recStart = Date.now();
+  $("recBtn").classList.add("on"); $("recBtn").textContent = "그만 말하기";
+  recTick = setInterval(() => { const s = Math.round((Date.now() - recStart) / 1000); $("recTimer").textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; $("recTimer").classList.toggle("long", s > 120); }, 500);
+}
+function stopRec(discard) {
+  if (!rec) return null;
+  clearInterval(recTick);
+  rec.node.disconnect(); rec.src.disconnect(); rec.stream.getTracks().forEach((t) => t.stop()); rec.ctx.close();
+  $("recBtn").classList.remove("on"); $("recBtn").textContent = "말로 답하기"; $("scoreBtn").textContent = "채점받기";
+  const r = rec; rec = null;
+  if (discard) return null;
+  const len = r.chunks.reduce((a, c) => a + c.length, 0), ratio = r.rate / 16000;
+  const out = new Int16Array(Math.floor(len / ratio));
+  let all = new Float32Array(len), o = 0; r.chunks.forEach((c) => { all.set(c, o); o += c.length; });
+  for (let i = 0; i < out.length; i++) { const v = Math.max(-1, Math.min(1, all[Math.floor(i * ratio)])); out[i] = v < 0 ? v * 0x8000 : v * 0x7fff; }
+  let bin = ""; const bytes = new Uint8Array(out.buffer);
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+// 녹음을 멈추고 받아쓴 글을 답 칸에 넣는다. 성공하면 true
+async function finishRec() {
+  recSecs = Math.round((Date.now() - recStart) / 1000);
+  const b64 = stopRec(false);
+  $("scoreBtn").textContent = "채점받기";
+  busy($("recBtn"), true, "받아쓰는 중");
+  let ok = false;
+  try {
+    const d = await api("/api/transcribe", { pcm_b64: b64, lang: $("lang").value === "en" ? "en" : "ko" });
+    $("ansText").value = ($("ansText").value ? $("ansText").value + " " : "") + d.text; ok = true;
+  } catch (e) { $("coachErr").textContent = e.message; }
+  busy($("recBtn"), false, "말로 답하기");
+  return ok;
+}
+$("recBtn").addEventListener("click", async () => {
+  $("coachErr").textContent = "";
+  if (!rec) {
+    try { await startRec(); $("scoreBtn").textContent = "말 끝내고 채점받기"; }
+    catch (e) { $("coachErr").textContent = "마이크를 쓸 수 없어요. 브라우저 마이크 권한을 확인해 주세요."; }
+    return;
+  }
+  await finishRec();
+});
+
+function ivContext() {
+  if (!prep) return "";
+  const iv = prep.interview || {};
+  return [`상대: ${prep.counterpart ? prep.counterpart.who : ""}`, iv.message ? `내 한 줄: ${iv.message}` : "", (iv.criteria || []).length ? `면접관이 볼 기준: ${iv.criteria.join(", ")}` : ""].filter(Boolean).join("\n");
+}
+function ivFacts() {
+  if (!prep || !prep.me) return "";
+  const iv = prep.interview || {};
+  const facts = [...(iv.answers || []), ...(iv.risks || [])].flatMap((a) => a.facts || []);
+  return [prep.me.headline, ...(prep.me.points || []), ...new Set(facts)].filter(Boolean).map((x) => "- " + x).join("\n");
+}
+function ivGuard() {
+  const iv = (prep && prep.interview) || {};
+  return [$("guardrails").value, ...(iv.dont || []), qCur && qCur.dont ? `이 질문에서 피할 말: ${qCur.dont}` : ""].filter(Boolean).join("\n");
+}
+let lastScore = null;
+$("scoreBtn").addEventListener("click", async () => {
+  $("coachErr").textContent = "";
+  if (rec && !(await finishRec())) return;  // 말하는 중이면 한 번에 멈추고 받아써서 채점한다
+  if (!qCur || !qCur.question) { $("coachErr").textContent = "질문을 먼저 골라 주세요"; return; }
+  busy($("scoreBtn"), true, "채점하는 중");
+  try {
+    const d = await api("/api/rehearse", { question: qCur.question, qtype: qCur.qtype, answer: $("ansText").value, secs: recSecs, ref: qCur.ref || "", context: ivContext(), guardrails: ivGuard(), facts: ivFacts() });
+    lastScore = { q: qCur, d };
+    renderScore(qCur, d);
+    if (qCur.bankId) bankOp({ op: "score", id: qCur.bankId, total: d.total }).catch(() => {});
+  } catch (e) { $("coachErr").textContent = e.message; }
+  busy($("scoreBtn"), false, "채점받기");
+});
+function renderScore(q, d) {
+  const bars = (d.scores || []).map((x) => `<div class="barrow"><span>${esc(x.name)}</span><span class="track"><i class="${x.score <= 2 ? "low" : ""}" style="width:${x.score * 20}%"></i></span><b>${x.score}</b><small>${esc(x.why)}</small></div>`).join("");
+  const ul = (t, xs) => (xs || []).length ? `<h2>${t}</h2><ul class="list">${xs.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
+  $("scoreBox").innerHTML = `<div class="total"><b>${d.total}</b><span>점 / 100${recSecs ? ` · 말한 시간 ${recSecs}초` : ""}</span></div>
+    <div class="bars">${bars}</div>${ul("잘한 점", d.good)}${ul("고칠 점", d.fix)}
+    <h2 style="margin-top:14px">더 나은 답</h2><div class="cueline">핵심어 ${esc(d.cue)}</div><div class="better">${esc(d.better)}</div>
+    <div class="row"><button class="btn" id="saveBetter" type="button">이 답을 답변 은행에 저장</button><button class="btn" id="tryFollow" type="button">꼬리 질문으로 연습</button></div>
+    <p class="help" style="margin-top:10px">면접관의 꼬리 질문: ${esc(d.followup_q)}</p>
+    ${q.ref ? `<details class="adv"><summary>준비해 둔 답 보기</summary><p class="help">${esc(q.ref)}</p></details>` : ""}`;
+  $("scoreBox").hidden = false;
+  if (innerWidth < 900) $("scoreBox").scrollIntoView({ behavior: "smooth" });
+}
+$("scoreBox").addEventListener("click", (e) => {
+  if (!lastScore) return;
+  const { q, d } = lastScore;
+  if (e.target.id === "saveBetter") saveToBank([{ id: q.bankId, qtype: q.qtype, question: q.question, answer: d.better, cue: d.cue, dont: q.dont || "" }], "연습").then(() => { renderQPick(); });
+  if (e.target.id === "tryFollow") { const f = { qtype: q.qtype, question: d.followup_q, ref: "", group: "꼬리 질문" }; setQuestion(f); $("qTag").textContent = "꼬리 질문"; window.scrollTo(0, 0); }
+});
+
+function renderBank() {
+  $("bankList").innerHTML = bank.answers.length ? `<h2>답변 은행</h2><p class="help">질문 종류마다 가장 잘 다듬은 답을 남겨요. 답과 핵심어를 눌러 바로 고칠 수 있어요.</p>` + bank.answers.map((a) => {
+    const last = (a.scores || []).slice(-1)[0];
+    return `<div class="bankitem" data-bid="${esc(a.id)}"><span class="qtag">${esc(a.qtype)}</span>
+      <div class="bq">${esc(a.question)}</div>
+      <div class="bc" contenteditable="true" data-bf="cue">${esc(a.cue)}</div>
+      <div class="ba" contenteditable="true" data-bf="answer">${esc(a.answer)}</div>
+      <small>${a.company ? esc(a.company) + " 면접용 · " : ""}${esc(a.source || "")} · ${esc(a.updated || "")}${last ? ` · 최근 연습 ${last.total}점` : ""}</small>
+      <div class="row"><button class="btn" type="button" data-bpractice="${esc(a.id)}">연습</button><button class="btn ghost" type="button" data-bdel="${esc(a.id)}">지우기</button></div></div>`;
+  }).join("") : `<p class="help">아직 저장한 답이 없어요. 준비 자료의 예상 답이나 연습에서 받은 더 나은 답을 저장하면 여기에 모여요.</p>`;
+}
+$("bankList").addEventListener("focusout", (e) => {
+  const f = e.target.dataset.bf; if (!f) return;
+  const id = e.target.closest("[data-bid]").dataset.bid, a = bank.answers.find((x) => x.id === id);
+  const v = e.target.textContent.trim(); if (!a || a[f] === v) return;
+  bankOp({ op: "edit", id, [f]: v }).then(() => toast("고쳤어요")).catch((x) => toast(x.message));
+});
+$("bankList").addEventListener("click", async (e) => {
+  const del = e.target.closest("[data-bdel]");
+  if (del) { if (!confirm("이 답을 지울까요?")) return; await bankOp({ op: "delete", id: del.dataset.bdel }).catch((x) => toast(x.message)); renderBank(); return; }
+  const pr = e.target.closest("[data-bpractice]");
+  if (pr) { const a = bank.answers.find((x) => x.id === pr.dataset.bpractice); renderQPick(); setCTab("practice"); setQuestion(qList.find((q) => q.question === a.question)); }
+});
+const RESULTS = ["대기", "다음 단계", "합격", "불합격", "내가 그만둠"];
+function renderMemory() {
+  $("lessonList").innerHTML = bank.lessons.length ? bank.lessons.map((l, i) => `<div class="lessonitem"><span>${esc(l.text)}<small>${esc(l.from || "")} · ${esc(l.date || "")}</small></span><button type="button" data-ldel="${i}">지우기</button></div>`).join("") : `<p class="help">아직 없어요.</p>`;
+  $("histList").innerHTML = bank.history.length ? bank.history.map((h) => `<div class="histitem"><span>${esc(h.company)}<small style="display:block;color:var(--dim);font-size:12px">${esc(h.date.slice(0, 4))}.${esc(h.date.slice(4, 6))}.${esc(h.date.slice(6, 8))}</small></span><select data-hres="${esc(h.id)}" aria-label="결과">${RESULTS.map((r) => `<option${r === h.result ? " selected" : ""}>${r}</option>`).join("")}</select></div>`).join("") : `<p class="help">아직 없어요.</p>`;
+}
+$("cMemory").addEventListener("click", async (e) => { const d = e.target.closest("[data-ldel]"); if (d) { await bankOp({ op: "lesson_delete", index: +d.dataset.ldel }).catch((x) => toast(x.message)); renderMemory(); } });
+$("cMemory").addEventListener("change", (e) => { const s = e.target.closest("[data-hres]"); if (s) bankOp({ op: "result", id: s.dataset.hres, result: s.value }).then(() => toast("결과를 남겼어요")).catch((x) => toast(x.message)); });
 
 // ================= 미팅 화면 =================
 let L = { meeting: null, lines: [], terms: [], flow: [], decisions: [], actions: [], numbers: [], covered: [], alerts: [], speakers: {} };
@@ -700,6 +1095,12 @@ function syncPins(list) { if (!Array.isArray(list)) return; pins = list; store.s
 function enterLive(m) {
   if (matchMedia("(min-width: 900px)").matches && m.prep) { tab = "brief"; [...$("seg").children].forEach((x) => x.classList.toggle("on", x.dataset.tab === "brief")); }
   const info = MODE_INFO[m.mode] || MODE_INFO.meeting;
+  // 지난 미팅의 핵심어·카드 표시가 남지 않게 비운다
+  ["cue", "cardTag", "dontLine"].forEach((id) => { $(id).textContent = ""; $(id).classList.remove("on"); });
+  document.body.classList.remove("hascue");
+  $("hints").innerHTML = "";
+  $("gist").textContent = "상대가 말하면 요지가 뜹니다"; $("gist").classList.add("blank"); $("kind").hidden = true; $("intent").textContent = "";
+  $("reply").textContent = info.empty; $("reply").classList.add("blank");
   $("replyLabel").textContent = info.reply;
   const r = $("reply"); if (r.classList.contains("blank")) r.textContent = info.empty;
   pins = store.get(pinKey(), []);
@@ -731,11 +1132,20 @@ function renderCard(card) {
   if (card.reply) { if (r.textContent !== card.reply) { r.textContent = card.reply; r.classList.remove("blank"); flash($("rCard")); } }
   else if (card.gist && !r.classList.contains("blank")) { /* 이전 답은 남겨 둔다: 상대가 설명을 이어 가는 중 */ }
   $("hints").innerHTML = (card.hints || []).map((h) => `<span class="chip">${esc(h.exp)}</span>`).join("");
+  // 면접: 미리 다듬은 답변 카드의 핵심어를 가장 크게, 곤란한 질문이면 피할 말을 함께
+  const cards = (L.meeting && L.meeting.cards) || [];
+  const c = card.card >= 0 ? cards[card.card] : null;
+  if (card.gist) {
+    $("cue").textContent = c ? c.cue : ""; $("cue").classList.toggle("on", !!(c && c.cue));
+    $("cardTag").textContent = c ? `${c.qtype} 카드` : (card.qtype || ""); $("cardTag").classList.toggle("on", !!(c || card.qtype));
+    $("dontLine").textContent = c && c.dont ? `피할 말: ${c.dont}` : ""; $("dontLine").classList.toggle("on", !!(c && c.dont));
+    document.body.classList.toggle("hascue", !!(c && c.cue));
+  }
 }
 
 function renderAlerts() {
   const a = L.alerts[L.alerts.length - 1];
-  let text = a ? `지켜야 할 선: ${a.text}` : "";
+  let text = a ? (a.text.startsWith("방금 내 말") ? a.text : `지켜야 할 선: ${a.text}`) : "";
   const m = L.meeting;
   if (m && m.minutes && m.goals.length) {
     const left = m.minutes - (Date.now() / 1000 - m.started) / 60;
@@ -829,7 +1239,10 @@ function briefDoc(p) {
   const sec = (title, lead, items) => (lead || (items && items.length)) ? `<section><h3>${esc(title)}</h3>${lead ? `<p class="lead">${esc(lead)}</p>` : ""}<ul>${(items || []).filter(Boolean).map((t) => `<li><span class="tx">${esc(t)}</span></li>`).join("")}</ul></section>` : "";
   return `<div class="dbrand">미팅냥 · 미팅 준비 자료</div><div class="dtitle">${esc(p.title || "")}</div><div class="dsub">${esc(MODE_NAME[(L.meeting || {}).mode] || "")}</div>` +
     sec("상대", p.counterpart && p.counterpart.who, p.counterpart && p.counterpart.points) + sec("나", p.me && p.me.headline, p.me && p.me.points) +
-    sec("이번 미팅에서 꺼낼 이야기", "", p.talk) + sec("조심하거나 꼭 확인할 것", "", p.watch) + sec("목표", "", p.goals) + sec("미리 띄워 둘 답", "", p.pins) + sec("용어", "", p.terms);
+    sec("이번 미팅에서 꺼낼 이야기", "", p.talk) + sec("조심하거나 꼭 확인할 것", "", p.watch) + sec("목표", "", p.goals) + sec("미리 띄워 둘 답", "", p.pins) + sec("용어", "", p.terms) +
+    (p.interview ? sec("계속 돌아올 한 줄", p.interview.message, []) +
+      sec("예상 질문 핵심어", "", [...(p.interview.answers || []), ...(p.interview.risks || [])].map((a) => `${a.question}: ${a.cue}` + (a.dont ? ` (피할 말: ${a.dont})` : ""))) +
+      sec("내가 물어볼 질문", "", p.interview.ask) + sec("말하지 않을 것", "", p.interview.dont) : "");
 }
 
 function renderAll() { renderCard(L.card); renderTermsStrip(); redrawFeed(); renderSheet(); renderAlerts(); }
@@ -880,9 +1293,9 @@ document.addEventListener("click", (e) => {
 $("endBtn").addEventListener("click", async () => {
   if (!confirm("미팅을 끝내고 정리할까요? 받아쓰기가 멈춥니다.")) return;
   $("sheet").classList.remove("open");
-  const id = L.meeting && L.meeting.id;
+  const id = L.meeting && L.meeting.id, lm = L.meeting;  // 끝나면 서버가 meeting을 비우므로 미리 잡아 둔다
   show("after"); $("aWait").hidden = false; $("aBody").innerHTML = ""; $("aSide").innerHTML = ""; $("aTitle").textContent = (L.meeting && L.meeting.title) || "미팅 정리";
-  try { const d = await api("/api/stop", {}); renderAfter(L.meeting, d.after); }
+  try { const d = await api("/api/stop", {}); renderAfter(lm || { id: d.id }, d.after); }
   catch (e) { $("aWait").hidden = true; $("aBody").innerHTML = `<div class="err">${esc(e.message)}</div>`; if (id) openAfter(id); }
 });
 
@@ -893,6 +1306,14 @@ async function openAfter(id) {
   try { const d = await api("/api/meetings/" + id); if (d.after) renderAfter(d.meeting, d.after); else { $("aTitle").textContent = d.meeting ? d.meeting.title : "미팅"; $("aBody").innerHTML = `<div class="step"><p class="help">정리 결과가 없어요.</p></div>`; } }
   catch (e) { $("aBody").innerHTML = `<div class="err">${esc(e.message)}</div>`; }
   window.scrollTo(0, 0);
+}
+function debriefSections(a) {
+  const d = a.debrief; if (!d) return [];
+  return [
+    { title: "면접관 기준으로 본 점수", items: (d.scores || []).map((x) => `${x.name} ${x.score}/5 · ${x.why}`) },
+    { title: "질문별 돌아보기", pre: (d.answers || []).map((x) => `[${x.verdict}] ${x.question}\n내 답: ${x.mine}\n더 나은 답: ${x.better}`).join("\n\n") },
+    { title: "잘한 것", items: d.went_well }, { title: "고칠 것", items: d.to_fix }, { title: "다음 면접에 가져갈 것", items: d.lessons },
+  ];
 }
 function afterSections(a) {
   return [
@@ -905,14 +1326,27 @@ function afterSections(a) {
     { title: "핀 고정한 것", items: (a.pins || []).map((p) => p.text) },
   ];
 }
+function debriefHtml(a) {
+  const d = a.debrief; if (!d) return "";
+  const ul = (t, xs) => (xs || []).length ? `<div class="step"><h2>${t}</h2><ul class="list">${xs.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>` : "";
+  const bars = (d.scores || []).map((x) => `<div class="barrow"><span>${esc(x.name)}</span><span class="track"><i class="${x.score <= 2 ? "low" : ""}" style="width:${x.score * 20}%"></i></span><b>${x.score}</b><small>${esc(x.why)}</small></div>`).join("");
+  const rev = (d.answers || []).map((x, i) => `<div class="review"><div class="rq"><span class="verdict ${esc(x.verdict)}">${esc(x.verdict)}</span><span>${esc(x.question)}</span></div>
+      <div class="mine">내 답: ${esc(x.mine)}</div><div class="better">${esc(x.better)}</div>
+      ${a.carried ? "" : `<label><input type="checkbox" data-pick="${i}"${x.verdict !== "좋음" ? " checked" : ""}> 이 답을 답변 은행에 넣기</label>`}</div>`).join("");
+  return (bars ? `<div class="step"><h2>면접관 기준으로 본 점수 <em>스스로 돌아보는 참고값이에요</em></h2><div class="bars">${bars}</div></div>` : "") +
+    (rev ? `<div class="step"><h2>질문별 돌아보기</h2>${rev}</div>` : "") +
+    ul("잘한 것", d.went_well) + ul("고칠 것", d.to_fix) + ul("면접관이 보인 신호", d.signals) + ul("다음 면접에 가져갈 것", d.lessons);
+}
 function renderAfter(m, a) {
   afterShown = { m, a };
   $("aWait").hidden = true;
   $("aTitle").textContent = (m && m.title) || "미팅 정리";
-  $("aBody").innerHTML = afterSections(a).filter((s) => s.items && s.items.length)
-    .map((s) => `<div class="step"><h2>${esc(s.title)}</h2><ul class="list">${s.items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>`).join("")
+  $("aBody").innerHTML = (debriefHtml(a) + afterSections(a).filter((s) => s.items && s.items.length)
+    .map((s) => `<div class="step"><h2>${esc(s.title)}</h2><ul class="list">${s.items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>`).join(""))
     || `<div class="step"><p class="help">받아쓴 대화가 없어 정리할 내용이 없어요.</p></div>`;
-  $("aSide").innerHTML = `<div class="step mail"><h2>후속 메일 초안 <em>고쳐서 그대로 보내세요</em></h2>
+  const carry = a.debrief ? `<div class="step"><h2>다음 면접에 가져가기</h2><p class="help">고른 더 나은 답과 배운 점을 면접 기록장에 넣어요. 다음 준비 자료가 이걸 바탕으로 만들어져요.</p>
+      <div class="row">${a.carried ? `<span class="saved">기록장에 넣었어요</span><button class="btn" id="goCoach" type="button">기록장 열기</button>` : `<button class="btn main" id="carryBtn" type="button">기록장에 넣기</button>`}</div></div>` : "";
+  $("aSide").innerHTML = carry + `<div class="step mail"><h2>${a.debrief ? "감사 메일 초안" : "후속 메일 초안"} <em>고쳐서 그대로 보내세요</em></h2>
       <textarea id="followup" rows="14">${esc(a.followup || "")}</textarea>
       <div class="row"><button class="btn main" id="copyBtn" type="button">메일 복사</button></div></div>
     <div class="step"><h2>저장</h2><p class="help">정리 내용 전체를 파일로 남겨요.</p>
@@ -923,15 +1357,22 @@ document.addEventListener("click", async (e) => {
   if (!$("after").classList.contains("on") || !afterShown) return;
   const { m, a } = afterShown;
   if (e.target.id === "copyBtn") navigator.clipboard.writeText($("followup").value).then(() => toast("복사했어요"));
+  if (e.target.id === "goCoach") openCoach("bank");
+  if (e.target.id === "carryBtn") {
+    const picks = [...document.querySelectorAll("#aBody [data-pick]")].filter((x) => x.checked).map((x) => +x.dataset.pick);
+    busy(e.target, true, "넣는 중");
+    try { await bankOp({ op: "carry", id: m.id, picks }); a.carried = true; renderAfter(m, a); toast("기록장에 넣었어요"); }
+    catch (err) { toast(err.message); busy($("carryBtn"), false, "기록장에 넣기"); }
+  }
   if (e.target.id === "afterPdf") {
     busy(e.target, true, "PDF 만드는 중");
-    try { await savePdf((m && m.title) || "미팅 정리", afterMeta(), [...afterSections(a), { title: "후속 메일 초안", pre: $("followup").value }], `미팅 정리 - ${safeName(m && m.title)}.pdf`); toast("PDF를 저장했어요"); }
+    try { await savePdf((m && m.title) || "미팅 정리", afterMeta(), [...debriefSections(a), ...afterSections(a), { title: a.debrief ? "감사 메일 초안" : "후속 메일 초안", pre: $("followup").value }], `미팅 정리 - ${safeName(m && m.title)}.pdf`); toast("PDF를 저장했어요"); }
     catch (err) { toast(err.message); }
     busy($("afterPdf"), false, "PDF로 저장");
   }
   if (e.target.id === "exportBtn") {
-    const md = `# ${(m && m.title) || "미팅"}\n\n${afterMeta()}\n\n` + [...afterSections(a), { title: "후속 메일 초안", items: [] }]
-      .map((s) => `## ${s.title}\n` + (s.title === "후속 메일 초안" ? "\n" + $("followup").value : (s.items || []).map((t) => "- " + t).join("\n") || "- 없음")).join("\n\n") + "\n";
+    const md = `# ${(m && m.title) || "미팅"}\n\n${afterMeta()}\n\n` + [...debriefSections(a), ...afterSections(a), { title: "후속 메일 초안", items: [] }]
+      .map((s) => `## ${s.title}\n` + (s.title === "후속 메일 초안" ? "\n" + $("followup").value : s.pre ? "\n" + s.pre : (s.items || []).map((t) => "- " + t).join("\n") || "- 없음")).join("\n\n") + "\n";
     const url = URL.createObjectURL(new Blob([md], { type: "text/markdown" }));
     const link = document.createElement("a"); link.href = url; link.download = `미팅 정리 - ${safeName(m && m.title)}.md`; link.click(); URL.revokeObjectURL(url);
   }
@@ -957,6 +1398,7 @@ function connect() {
     } else if (m.type === "line") { L.lines.push(m.line); if (L.lines.length > 60) L.lines.shift(); redrawFeed(); }
     else if (m.type === "card") { Object.assign(L, m); renderCard(m.card); renderTermsStrip(); redrawFeed(); renderSheet(); renderAlerts(); }
     else if (m.type === "status") setState(m.state);
+    else if (m.type === "alerts") { L.alerts = m.alerts; renderAlerts(); }
     else if (m.type === "pins") syncPins(m.pins);
     else if (m.type === "speakers") { L.speakers = m.speakers; redrawFeed(); if (tab === "people" || true) renderSheet(); }
     else if (m.type === "tr") { const l = L.lines.find((x) => x.id === m.id); if (l) { l.ko = m.ko; redrawFeed(); } }
