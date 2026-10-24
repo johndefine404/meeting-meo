@@ -184,6 +184,7 @@ MEETING_MEO_FEED=시험.wav ./meeting-meo
   - **폰 프롬프터**: 면접 중 처우 같은 곤란한 질문에는 추천 답을 큼직하게 띄우고, 지켜야 할 선을 넘으면 경고해요.
 - **데이터 폴더 바꾸기**: `MEETING_MEO_DATA=/다른/폴더 ./meeting-meo` 로 설정과 기록 위치를 바꿀 수 있어요. 설계는 [docs/interview-upgrade.md](docs/interview-upgrade.md)에 있어요.
 - 화면 아래 만든 곳 표기를 define404.com 으로 연결했어요.
+- **데모에서도 면접 모드**: meeting.define404.com 에서 면접 준비 키트, 연습 채점, 답변 은행, 면접 후 복기를 예시 데이터로 눌러 볼 수 있어요.
 
 ### 2026-10-21
 
@@ -217,10 +218,6 @@ MEETING_MEO_FEED=시험.wav ./meeting-meo
 - 폰 프롬프터 보기, 맥과 폰의 핀 동기화, 줌 창 비추기
 - 요약 AI 선택: Claude, ChatGPT, Gemini
 - 설치 없이 보는 데모: https://meeting.define404.com
-
-## 라이선스
-
-MIT. Define404
 
 ## 만든 곳
 
