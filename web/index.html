@@ -611,7 +611,7 @@ const MODE_NAME = { interview: "면접", sales: "영업·제안", meeting: "회�
 function setMode(m) {
   mode = m; store.set("mm-mode", m);
   [...$("modes").children].forEach((b) => b.classList.toggle("on", b.dataset.mode === m));
-  $("memStep").hidden = m !== "interview" || !!window.MM_DEMO;
+  $("memStep").hidden = m !== "interview";
   if (prep) renderDoc();
 }
 $("modes").addEventListener("click", (e) => { const b = e.target.closest("[data-mode]"); if (b) setMode(b.dataset.mode); });
@@ -867,7 +867,6 @@ $("hist").addEventListener("click", async (e) => { const a = e.target.closest("[
 // ================= 면접 기록장 · 연습 =================
 let bank = { answers: [], lessons: [], history: [] };
 async function loadBank() {
-  if (window.MM_DEMO) return bank;
   try { bank = await api("/api/bank"); } catch (e) { /* 기록장이 없어도 나머지는 그대로 쓴다 */ }
   const n = bank.answers.length, l = bank.lessons.length, h = bank.history.length;
   $("memStat").textContent = n || l || h ? `다듬은 답 ${n}개 · 배운 점 ${l}개 · 지난 면접 ${h}건` : "아직 비어 있어요. 준비 자료를 만들고 답을 저장하면 쌓여요.";
